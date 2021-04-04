@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
     actions: {
         getPackages({commit}, payload) {
-            axios.get(`http://registry.npmjs.com/-/v1/search?text=${payload}&size=100&quality=1.0&maintenance=0.0&popularity=0.0`)
+            axios.get(`https://registry.npmjs.com/-/v1/search?text=${payload}&size=100&quality=1.0&maintenance=0.0&popularity=0.0`)
                 .then(response => {
                     commit('SET_PACKAGES', response.data.objects)
                 })
