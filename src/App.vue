@@ -1,6 +1,6 @@
 <template :class="{lock: MODAL_SHOW}">
-  <v-app >
-    <b-container >
+  <v-app>
+    <v-container>
       <v-row class="d-flex justify-content-center mb-2 mt-2">
         <b-form-input
             size="lg"
@@ -63,7 +63,7 @@
           <div class="col-12 empty-data"/>
         </v-row>
       </template>
-    </b-container>
+    </v-container>
       <v-footer
           v-bind="localAttrs"
           :padless="padless"
@@ -78,7 +78,7 @@
           </div>
         </div>
       </v-footer>
-      <Modal v-if="MODAL_SHOW"></Modal>
+    <Modal v-if="MODAL_SHOW"></Modal>
   </v-app>
 </template>
 
@@ -139,11 +139,11 @@ export default {
       this.showModal = !this.showModal
     }
   },
-  watch:{
-    MODAL_SHOW: function (){
-      if(this.MODAL_SHOW){
+  watch: {
+    MODAL_SHOW: function () {
+      if (this.MODAL_SHOW) {
         document.documentElement.style.overflow = 'hidden'
-      }else{
+      } else {
         document.documentElement.style.overflow = 'auto'
       }
 
@@ -184,7 +184,8 @@ export default {
     }
   }
 }
-.lock{
+
+.lock {
   overflow: hidden;
 }
 </style>
