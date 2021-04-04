@@ -24,7 +24,6 @@
               >
                 <span class="packages-item__header mr-2">Author:</span>
                 <div v-if="currentPackage.package.author.name">
-
                   <span class="packages-item__small-header mr-2">Name author:</span>
                   {{ currentPackage.package.author.name }}
                 </div>
@@ -37,7 +36,6 @@
                   {{ currentPackage.package.author.email }}
                 </div>
               </div>
-
               <div class="packages__item-maintainers">
                 <span class="packages-item__header "
                 >Maintainers:</span>
@@ -64,13 +62,9 @@
                   </div>
                 </div>
               </div>
-
-              <div
-                  class="d-flex align-center align-sm-start justify-space-between mt-2 mt-sm-5"
-              >
+              <div class="d-flex align-center align-sm-start justify-space-between mt-2 mt-sm-5">
                 <div
-                    class="packages-item__keywords packages-item__keywords--modal"
-                >
+                    class="packages-item__keywords d-flex flex-wrap">
                     <span
                         class="keywords__item"
                         v-for="(keyword, index) in currentPackage.package.keywords"
@@ -99,7 +93,6 @@
               <v-icon small color="#4D5058">mdi-close</v-icon>
             </button>
           </div>
-
         </b-col>
       </b-row>
     </b-container>
@@ -127,7 +120,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
 .modal {
   display: flex;
@@ -139,7 +131,6 @@ export default {
   height: 100%;
   z-index: 100;
   background: rgb(31 37 45 / 70%);
-
   &__window {
     width: 100%;
     max-width: 700px;
@@ -147,7 +138,6 @@ export default {
     position: relative;
     background: #e3faf6;
   }
-
   .packages-item {
     &__header {
       font-size: 16px;
@@ -172,19 +162,16 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 2px;
-        margin-right: 2px;
+        padding: 2px 8px;
+        margin: 2px;
       }
-
     }
   }
-
   &__btn-close {
     position: absolute;
     right: 5px;
     top: 0;
     z-index: 1;
   }
-
 }
 </style>

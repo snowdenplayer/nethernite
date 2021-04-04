@@ -1,83 +1,85 @@
-<template>
-  <b-container fluid>
-    <v-row class="d-flex justify-content-center mb-2 mt-2">
-      <b-form-input
-          size="lg"
-          v-model="searchItem"
-          placeholder="Find package"
-          @input="searchFunction"
-          class="col-8"
-      />
-    </v-row>
-    <template v-if="GET_PACKAGES.length">
-      <b-table
-          v-if="GET_PACKAGES.length"
-          id="my-table"
-          :items="GET_PACKAGES"
-          :fields="fields"
-          :per-page="perPage"
-          :current-page="currentPage"
-          @row-clicked="showLog"
-          style="width: 100%"
-      >
-        <template #cell(name)="GET_PACKAGES" class="text-center">
-          {{ GET_PACKAGES.item.package.name }}
-        </template>
-        <template #cell(keywords)="GET_PACKAGES" class="text-center">
+<template :class="{lock: MODAL_SHOW}">
+  <v-app >
+    <b-container >
+      <v-row class="d-flex justify-content-center mb-2 mt-2">
+        <b-form-input
+            size="lg"
+            v-model="searchItem"
+            placeholder="Find package"
+            @input="searchFunction"
+            class="col-8"
+        />
+      </v-row>
+      <template v-if="GET_PACKAGES.length">
+        <v-row>
+          <b-table
+              v-if="GET_PACKAGES.length"
+              id="my-table"
+              :items="GET_PACKAGES"
+              :fields="fields"
+              :per-page="perPage"
+              :current-page="currentPage"
+              @row-clicked="showLog"
+          >
+            <template #cell(name)="GET_PACKAGES" class="text-center">
+              {{ GET_PACKAGES.item.package.name }}
+            </template>
+            <template #cell(keywords)="GET_PACKAGES" class="text-center">
             <span
                 class="packages-item__badge"
                 v-for="(keyword, index) in GET_PACKAGES.item.package.keywords"
                 :key="index"
             >{{ keyword }}
           </span>
-        </template>
-        <template #cell(version)="GET_PACKAGES">
-          {{ GET_PACKAGES.item.package.version }}
-        </template>
-        <template #cell(links)="GET_PACKAGES">
-          <a
-              class="packages-item__link"
-              v-for="(link, name) in GET_PACKAGES.item.package.links"
-              :key="name"
-              :href="link"
-              target="_blank"
-          >
-            <v-icon dense color="black">
-              {{ setPackageIcon(name) }}
-            </v-icon>
-          </a>
-        </template>
-      </b-table>
-      <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="my-table"
-          class="d-flex justify-content-center"
-      ></b-pagination>
-    </template>
-    <template v-else>
-      <v-row>
-        <div class="col-12 empty-data"/>
-      </v-row>
-
-    </template>
-
-    <footer
-        v-bind="localAttrs"
-        :padless="padless"
-        class="position-fixed fixed-bottom"
-    >
-      <b-container class="d-flex align-items-center">
-        <img class="portfolio__logo" src="./assets/portfolio.jpg" alt="">
-        <div class="portfolio__info ml-5">
-          <div class="portfoplio__name">Vladyslav Nahurnyi</div>
-          <a class="portfolio__link" href="https://github.com/snowdenplayer">GitHub</a>
+            </template>
+            <template #cell(version)="GET_PACKAGES">
+              {{ GET_PACKAGES.item.package.version }}
+            </template>
+            <template #cell(links)="GET_PACKAGES">
+              <a
+                  class="packages-item__link"
+                  v-for="(link, name) in GET_PACKAGES.item.package.links"
+                  :key="name"
+                  :href="link"
+                  target="_blank"
+              >
+                <v-icon dense color="black">
+                  {{ setPackageIcon(name) }}
+                </v-icon>
+              </a>
+            </template>
+          </b-table>
+        </v-row>
+        <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            class="d-flex justify-content-center"
+        ></b-pagination>
+      </template>
+      <template v-else>
+        <v-row>
+          <div class="col-12 empty-data"/>
+        </v-row>
+      </template>
+    </b-container>
+      <v-footer
+          v-bind="localAttrs"
+          :padless="padless"
+          class="portfolio"
+          dark
+      >
+        <div class="d-flex align-items-center">
+          <img class="portfolio__logo" src="./assets/portfolio.jpg" alt="">
+          <div class="portfolio__info ml-5">
+            <div class="portfolio__name">Vladyslav Nahurnyi</div>
+            <a class="portfolio__link" href="https://github.com/snowdenplayer">GitHub</a>
+          </div>
         </div>
-      </b-container>
-    </footer>
-    <Modal v-if="MODAL_SHOW"></Modal>
-  </b-container>
+      </v-footer>
+      <Modal v-if="MODAL_SHOW"></Modal>
+  </v-app>
 </template>
 
 <script>
@@ -137,36 +139,52 @@ export default {
       this.showModal = !this.showModal
     }
   },
+  watch:{
+    MODAL_SHOW: function (){
+      if(this.MODAL_SHOW){
+        document.documentElement.style.overflow = 'hidden'
+      }else{
+        document.documentElement.style.overflow = 'auto'
+      }
+
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .empty-data {
   width: 100%;
-  height: 400px;
+  height: 100vh;
   background-image: url('./assets/dataEmpty.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-footer {
+.portfolio {
   background: gray;
+
   .portfolio__logo {
     width: 100px;
     height: 100px;
     border-radius: 50%;
   }
-  .portfolio__info{
-    .portfoplio__name{
+
+  .portfolio__info {
+    .portfolio__name {
       font-weight: bolder;
       font-size: 20px;
     }
-    .portfolio__link{
+
+    .portfolio__link {
       font-size: 16px;
       font-weight: 600;
       color: #e3faf6;
     }
   }
+}
+.lock{
+  overflow: hidden;
 }
 </style>
